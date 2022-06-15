@@ -15,16 +15,16 @@ import java.util.Map;
  */
 public class PostgrestClient {
 
-  private final URI uri;
+  private final String uri;
   private final Map<String, String> headers = Collections.emptyMap();
   // private String schema;
 
   public PostgrestClient(String dbURI) throws URISyntaxException {
-    this.uri = new URI(dbURI);
+    this.uri = dbURI;
   }
 
   public PostgrestQueryBuilder from(String tableName) throws URISyntaxException {
-    URI tableURI = new URI(uri.getHost() + "/" + tableName);
+    String tableURI = uri + "/" + tableName;
     return new PostgrestQueryBuilder(tableURI, headers);
   }
 

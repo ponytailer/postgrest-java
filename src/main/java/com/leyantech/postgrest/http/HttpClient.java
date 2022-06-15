@@ -9,9 +9,9 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
-import javafx.beans.property.ObjectProperty;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -45,11 +45,19 @@ public class HttpClient {
     return 0L;
   }
 
-  public Optional<PostgrestResponse> execute(Method method, String url, String body) {
-    RequestBody requestBody = RequestBody.create(APPLICATION_JSON, body);
-    Request request = new Request.Builder().url(url).method(method.name(), requestBody).build();
+  public Optional<PostgrestResponse> execute(Method method, String url, Map<String, String> headers,
+      String body) {
+    Request.Builder builder;
+    if (Method.GET.equals(method) || Method.HEAD.equals(method)) {
+      builder = new Request.Builder().url(url).get();
+    } else {
+      RequestBody requestBody = RequestBody.create(APPLICATION_JSON, body);
+      builder = new Request.Builder().url(url).method(method.name(), requestBody);
+    }
+    headers.forEach((key, value) -> builder.addHeader(key, value));
+
     try {
-      Response response = client.newCall(request).execute();
+      Response response = client.newCall(builder.build()).execute();
       return Optional.of(
           new PostgrestResponse(response.code(), response.body().string(), getCount(response)));
     } catch (IOException e) {

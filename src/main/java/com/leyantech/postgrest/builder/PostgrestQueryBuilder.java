@@ -18,16 +18,16 @@ public class PostgrestQueryBuilder extends PostgrestBuilder {
   private static final String SELECT = "select";
   private static final String HEADER_PREFER = "Prefer";
 
-  public PostgrestQueryBuilder(URI uri, Map<String, String> headers) {
+  public PostgrestQueryBuilder(String uri, Map<String, String> headers) {
     this.uri = uri;
-    this.headers = headers;
+    this.headers.putAll(headers);
   }
 
   public PostgrestFilterBuilder select(String columns, Boolean head, Count count) {
-    this.method = head ? Method.HEAD : Method.GET;
+    method = head ? Method.HEAD : Method.GET;
     params.put(SELECT, columns);
     if (Objects.nonNull(count)) {
-      this.headers.put(HEADER_PREFER, "count=" + count.name().toLowerCase());
+      headers.put(HEADER_PREFER, "count=" + count.name().toLowerCase());
     }
     return new PostgrestFilterBuilder(this);
   }
