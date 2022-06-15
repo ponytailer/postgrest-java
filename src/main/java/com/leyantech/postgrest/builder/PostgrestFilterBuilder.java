@@ -19,4 +19,9 @@ public class PostgrestFilterBuilder extends PostgrestBuilder {
     return this;
   }
 
+  public <V> PostgrestFilterBuilder neq(String column, V value) {
+    params.put(column, "neq." + value);
+    return this;
+  }
+
 }
