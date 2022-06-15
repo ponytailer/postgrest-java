@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2022 Leyantech Ltd. All Rights Reserved.  -->
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <artifactId>postgrest-java</artifactId>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>8</source>
+          <target>8</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <groupId>com.leyantech.postgrest</groupId>
+  <modelVersion>4.0.0</modelVersion>
+  <packaging>pom</packaging>
+  <version>1.0.0</version>
+
+    <dependencies>
+
+      <dependency>
+        <groupId>com.squareup.okhttp</groupId>
+        <artifactId>okhttp</artifactId>
+        <version>2.7.5</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.inject</groupId>
+        <artifactId>guice</artifactId>
+        <version>5.1.0</version>
+      </dependency>
+
+    </dependencies>
+
+</project>
