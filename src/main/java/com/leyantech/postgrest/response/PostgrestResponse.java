@@ -1,7 +1,5 @@
 package com.leyantech.postgrest.response;
 
-import com.leyantech.postgrest.ItemDTO;
-
 import com.alibaba.fastjson.JSONObject;
 
 import java.util.List;
@@ -13,11 +11,14 @@ import java.util.List;
 
 public class PostgrestResponse<T> {
 
-  private final int status;
-  private final String body;
-  private final Long count;
+  private int status;
+  private String body;
+  private Long count;
 
-  public PostgrestResponse(int status, String body, Long count) {
+  public PostgrestResponse() {
+  }
+
+  public PostgrestResponse<T> populate(int status, String body, Long count) {
     this.status = status;
     this.body = body;
     this.count = count;

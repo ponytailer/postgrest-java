@@ -20,13 +20,10 @@ public class Main {
 
     PostgrestClient client = new PostgrestClient("http://192.168.9.47");
 
-    Optional<PostgrestResponse> response = client.from("item_with_categories")
+    List<ItemDTO> items = client.from("item_with_categories")
         .select("*", false, Count.EXACT)
-        .execute();
-
-    if (response.isPresent()) {
-      PostgrestResponse resp = response.get();
-      List<ItemDTO> items = resp.valueList(ItemDTO.class);
+        .eq("seller_id", 1)
+        .executeAndGetList(ItemDTO.class);
 
       items.forEach(System.out::println);
     }

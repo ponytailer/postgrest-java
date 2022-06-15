@@ -6,9 +6,9 @@ import com.leyantech.postgrest.http.HttpClient;
 import com.leyantech.postgrest.response.PostgrestResponse;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * @author hs, {@literal <hs@leyantech.com>}
  * @date 2022-06-15.
  */
-public class PostgrestBuilder {
+public class PostgrestBuilder<T> {
 
   private static final String CONTENT_TYPE = "Content-Type";
   private static final String MIN_TYPE = "application/json";
@@ -29,7 +29,7 @@ public class PostgrestBuilder {
   // insert & update.
   public String body = "";
 
-  public Optional<PostgrestResponse> execute() throws MethodNotFoundException {
+  public Optional<PostgrestResponse<T>> execute() throws MethodNotFoundException {
     if (Objects.isNull(method)) {
       throw new MethodNotFoundException("not support this method");
     }
@@ -48,6 +48,17 @@ public class PostgrestBuilder {
     }).collect(Collectors.joining("&"));
 
     String url = uri + "?" + arguments;
-    return new HttpClient().execute(method, url, headers, body);
+    Optional<PostgrestResponse<T>> response = new HttpClient().execute(method, url, headers, body);
+    return response;
+  }
+
+  public T executeAndGetSingle(Class<T> clazz) throws MethodNotFoundException {
+    Optional<PostgrestResponse<T>> response = execute();
+    return response.map(tPostgrestResponse -> tPostgrestResponse.value(clazz)).orElse(null);
+  }
+
+  public List<T> executeAndGetList(Class<T> clazz) throws MethodNotFoundException {
+    Optional<PostgrestResponse<T>> response = execute();
+    return response.map(tPostgrestResponse -> tPostgrestResponse.valueList(clazz)).orElse(null);
   }
 }

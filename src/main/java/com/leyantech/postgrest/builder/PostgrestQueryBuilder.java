@@ -13,7 +13,7 @@ import java.util.Objects;
  * @author ponytailer, {@literal <huangxiaohen2738@gmail.com>}
  * @date 2022-06-15.
  */
-public class PostgrestQueryBuilder extends PostgrestBuilder {
+public class PostgrestQueryBuilder<T> extends PostgrestBuilder<T> {
 
   private static final String SELECT = "select";
   private static final String HEADER_PREFER = "Prefer";
@@ -23,12 +23,12 @@ public class PostgrestQueryBuilder extends PostgrestBuilder {
     this.headers.putAll(headers);
   }
 
-  public PostgrestFilterBuilder select(String columns, Boolean head, Count count) {
+  public PostgrestFilterBuilder<T> select(String columns, Boolean head, Count count) {
     method = head ? Method.HEAD : Method.GET;
     params.put(SELECT, columns);
     if (Objects.nonNull(count)) {
       headers.put(HEADER_PREFER, "count=" + count.name().toLowerCase());
     }
-    return new PostgrestFilterBuilder(this);
+    return new PostgrestFilterBuilder<T>(this);
   }
 }
