@@ -4,11 +4,9 @@ package com.leyantech.postgrest;
 
 import com.leyantech.postgrest.enums.Count;
 import com.leyantech.postgrest.exceptions.MethodNotFoundException;
-import com.leyantech.postgrest.response.PostgrestResponse;
 
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author hs, {@literal <hs@leyantech.com>}
@@ -25,8 +23,8 @@ public class Main {
         .eq("seller_id", 1)
         .executeAndGetList(ItemDTO.class);
 
-      items.forEach(System.out::println);
-    }
+    items.forEach(System.out::println);
+
   }
 
 }

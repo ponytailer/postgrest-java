@@ -9,16 +9,13 @@ import java.util.List;
  * @date 2022-06-15.
  */
 
-public class PostgrestResponse<T> {
+public class PostgrestResponse {
 
-  private int status;
-  private String body;
-  private Long count;
+  private final int status;
+  private final String body;
+  private final Long count;
 
-  public PostgrestResponse() {
-  }
-
-  public PostgrestResponse<T> populate(int status, String body, Long count) {
+  public PostgrestResponse(int status, String body, Long count) {
     this.status = status;
     this.body = body;
     this.count = count;
@@ -28,11 +25,11 @@ public class PostgrestResponse<T> {
     return body;
   }
 
-  public T value(Class<T> clazz) {
+  public <T> T value(Class<T> clazz) {
     return JSONObject.parseObject(body, clazz);
   }
 
-  public List<T> valueList(Class<T> clazz) {
+  public <T> List<T> valueList(Class<T> clazz) {
     return JSONObject.parseArray(body, clazz);
   }
 

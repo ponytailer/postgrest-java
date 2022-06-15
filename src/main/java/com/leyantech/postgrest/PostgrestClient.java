@@ -4,7 +4,6 @@ package com.leyantech.postgrest;
 
 import com.leyantech.postgrest.builder.PostgrestQueryBuilder;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.Map;

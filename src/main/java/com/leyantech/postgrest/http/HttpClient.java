@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 
 @Singleton
-public class HttpClient<T> {
+public class HttpClient {
 
   private static final Logger LOGGER = Logger.getLogger(HttpClient.class.toString());
 
@@ -45,7 +45,7 @@ public class HttpClient<T> {
     return 0L;
   }
 
-  public Optional<PostgrestResponse<T>> execute(Method method, String url,
+  public Optional<PostgrestResponse> execute(Method method, String url,
       Map<String, String> headers,
       String body) {
     Request.Builder builder;
@@ -59,7 +59,7 @@ public class HttpClient<T> {
 
     try {
       Response response = client.newCall(builder.build()).execute();
-      PostgrestResponse<T> resp = new PostgrestResponse().populate(response.code(), response.body().string(),
+      PostgrestResponse resp = new PostgrestResponse(response.code(), response.body().string(),
           getCount(response));
       return Optional.of(resp);
     } catch (IOException e) {

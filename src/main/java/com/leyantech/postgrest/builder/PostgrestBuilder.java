@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * @author hs, {@literal <hs@leyantech.com>}
  * @date 2022-06-15.
  */
-public class PostgrestBuilder<T> {
+public class PostgrestBuilder {
 
   private static final String CONTENT_TYPE = "Content-Type";
   private static final String MIN_TYPE = "application/json";
@@ -29,7 +29,7 @@ public class PostgrestBuilder<T> {
   // insert & update.
   public String body = "";
 
-  public Optional<PostgrestResponse<T>> execute() throws MethodNotFoundException {
+  public Optional<PostgrestResponse> execute() throws MethodNotFoundException {
     if (Objects.isNull(method)) {
       throw new MethodNotFoundException("not support this method");
     }
@@ -48,17 +48,16 @@ public class PostgrestBuilder<T> {
     }).collect(Collectors.joining("&"));
 
     String url = uri + "?" + arguments;
-    Optional<PostgrestResponse<T>> response = new HttpClient().execute(method, url, headers, body);
-    return response;
+    return new HttpClient().execute(method, url, headers, body);
   }
 
-  public T executeAndGetSingle(Class<T> clazz) throws MethodNotFoundException {
-    Optional<PostgrestResponse<T>> response = execute();
+  public <T> T executeAndGetSingle(Class<T> clazz) throws MethodNotFoundException {
+    Optional<PostgrestResponse> response = execute();
     return response.map(tPostgrestResponse -> tPostgrestResponse.value(clazz)).orElse(null);
   }
 
-  public List<T> executeAndGetList(Class<T> clazz) throws MethodNotFoundException {
-    Optional<PostgrestResponse<T>> response = execute();
+  public <T> List<T> executeAndGetList(Class<T> clazz) throws MethodNotFoundException {
+    Optional<PostgrestResponse> response = execute();
     return response.map(tPostgrestResponse -> tPostgrestResponse.valueList(clazz)).orElse(null);
   }
 }
