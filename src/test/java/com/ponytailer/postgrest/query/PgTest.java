@@ -1,25 +1,26 @@
 // Copyright 2022 Leyantech Ltd. All Rights Reserved.
 
-package com.leyantech.postgrest;
+package com.ponytailer.postgrest.query;
 
-import com.leyantech.postgrest.enums.Count;
-import com.leyantech.postgrest.exceptions.MethodNotFoundException;
+import com.ponytailer.postgrest.PostgrestClient;
+import com.ponytailer.postgrest.exceptions.MethodNotFoundException;
 
-import java.net.URISyntaxException;
+import org.junit.Test;
+
 import java.util.List;
 
 /**
  * @author hs, {@literal <hs@leyantech.com>}
  * @date 2022-06-15.
  */
-public class Main {
+public class PgTest {
 
-  public static void main(String[] args) throws URISyntaxException, MethodNotFoundException {
-
+  @Test
+  public void testGet() throws MethodNotFoundException {
     PostgrestClient client = new PostgrestClient("http://192.168.9.47");
 
     List<ItemDTO> items = client.from("item_with_categories")
-        .select("*", false, Count.EXACT)
+        .select("*")
         .eq("seller_id", 1)
         .executeAndGetList(ItemDTO.class);
 

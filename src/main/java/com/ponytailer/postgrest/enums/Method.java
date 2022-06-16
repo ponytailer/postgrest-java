@@ -1,6 +1,6 @@
 // Copyright 2022 Leyantech Ltd. All Rights Reserved.
 
-package com.leyantech.postgrest.enums;
+package com.ponytailer.postgrest.enums;
 
 /**
  * @author hs, {@literal <hs@leyantech.com>}
@@ -8,6 +8,9 @@ package com.leyantech.postgrest.enums;
  */
 public enum Method {
   GET,
-  HEAD
+  HEAD,
+  POST,
+  PUT,
+  DELETE
 
 }

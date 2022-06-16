@@ -1,10 +1,9 @@
 // Copyright 2022 Leyantech Ltd. All Rights Reserved.
 
-package com.leyantech.postgrest;
+package com.ponytailer.postgrest;
 
-import com.leyantech.postgrest.builder.PostgrestQueryBuilder;
+import com.ponytailer.postgrest.builder.PostgrestQueryBuilder;
 
-import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.Map;
 
@@ -18,11 +17,11 @@ public class PostgrestClient {
   private final Map<String, String> headers = Collections.emptyMap();
   // private String schema;
 
-  public PostgrestClient(String dbURI) throws URISyntaxException {
+  public PostgrestClient(String dbURI) {
     this.uri = dbURI;
   }
 
-  public PostgrestQueryBuilder from(String tableName) throws URISyntaxException {
+  public PostgrestQueryBuilder from(String tableName) {
     String tableURI = uri + "/" + tableName;
     return new PostgrestQueryBuilder(tableURI, headers);
   }

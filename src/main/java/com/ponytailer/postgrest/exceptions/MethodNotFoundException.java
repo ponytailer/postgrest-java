@@ -1,6 +1,6 @@
 // Copyright 2022 Leyantech Ltd. All Rights Reserved.
 
-package com.leyantech.postgrest.exceptions;
+package com.ponytailer.postgrest.exceptions;
 
 /**
  * @author hs, {@literal <hs@leyantech.com>}

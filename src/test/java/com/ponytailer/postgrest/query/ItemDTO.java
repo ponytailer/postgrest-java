@@ -1,6 +1,6 @@
 // Copyright 2022 Leyantech Ltd. All Rights Reserved.
 
-package com.leyantech.postgrest;
+package com.ponytailer.postgrest.query;
 
 import java.util.List;
 
@@ -13,6 +13,9 @@ public class ItemDTO {
   private final List<String> genders;
   private final Long numIid;
 
+  /**
+   * test.
+   */
   public ItemDTO(Long numIid, List<String> genders) {
     this.numIid = numIid;
     this.genders = genders;
@@ -21,6 +24,7 @@ public class ItemDTO {
 
   @Override
   public String toString() {
-    return "numIid: "  + numIid + "; genders: " + genders.toString();
+    return "numIid: " + numIid + "; genders: " + genders.toString();
   }
 }
+

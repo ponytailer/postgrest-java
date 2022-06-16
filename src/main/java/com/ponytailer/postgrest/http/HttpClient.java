@@ -1,7 +1,8 @@
-package com.leyantech.postgrest.http;
+package com.ponytailer.postgrest.http;
 
-import com.leyantech.postgrest.enums.Method;
-import com.leyantech.postgrest.response.PostgrestResponse;
+import com.ponytailer.postgrest.enums.Method;
+import com.ponytailer.postgrest.response.PostgrestResponse;
+import com.leyantech.utility.Logger;
 
 import com.google.inject.Singleton;
 import com.squareup.okhttp.MediaType;
@@ -14,7 +15,6 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 /**
  * @author hs, {@literal <hs@leyantech.com>}
@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 @Singleton
 public class HttpClient {
 
-  private static final Logger LOGGER = Logger.getLogger(HttpClient.class.toString());
+  private static final Logger LOGGER = new Logger(HttpClient.class);
 
   private static final OkHttpClient client = new OkHttpClient();
 
@@ -45,6 +45,9 @@ public class HttpClient {
     return 0L;
   }
 
+  /**
+   * execute request to postgrest-sever.
+   */
   public Optional<PostgrestResponse> execute(Method method, String url,
       Map<String, String> headers,
       String body) {
@@ -63,7 +66,7 @@ public class HttpClient {
           getCount(response));
       return Optional.of(resp);
     } catch (IOException e) {
-      LOGGER.warning("call postgrest-server error: " + e);
+      LOGGER.error(e, "call postgrest-server error");
       return Optional.empty();
     }
   }

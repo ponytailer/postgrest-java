@@ -1,4 +1,4 @@
-package com.leyantech.postgrest.enums;
+package com.ponytailer.postgrest.enums;
 
 /**
  * @author ponytailer, {@literal <hs@leyantech.com>}
