@@ -2,7 +2,6 @@ package io.github.ponytailer.postgrest.http;
 
 import io.github.ponytailer.postgrest.enums.Method;
 import io.github.ponytailer.postgrest.response.PostgrestResponse;
-import com.leyantech.utility.Logger;
 
 import com.google.inject.Singleton;
 import com.squareup.okhttp.MediaType;
@@ -15,6 +14,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 /**
  * @author hs, {@literal <hs@leyantech.com>}
@@ -24,7 +24,7 @@ import java.util.Optional;
 @Singleton
 public class HttpClient {
 
-  private static final Logger LOGGER = new Logger(HttpClient.class);
+  private static final Logger LOGGER = Logger.getLogger(HttpClient.class.toString());
 
   private static final OkHttpClient client = new OkHttpClient();
 
@@ -66,7 +66,7 @@ public class HttpClient {
           getCount(response));
       return Optional.of(resp);
     } catch (IOException e) {
-      LOGGER.error(e, "call postgrest-server error");
+      LOGGER.warning("call postgrest-server error" + e.toString());
       return Optional.empty();
     }
   }
