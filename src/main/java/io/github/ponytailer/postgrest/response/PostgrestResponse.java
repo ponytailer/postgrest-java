@@ -1,4 +1,4 @@
-package com.ponytailer.postgrest.response;
+package io.github.ponytailer.postgrest.response;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -11,9 +11,9 @@ import java.util.List;
 
 public class PostgrestResponse {
 
-  private final int status;
-  private final String body;
-  private final Long count;
+  private int status;
+  private String body;
+  private Long count = 0L;
 
   /**
    * constructor.

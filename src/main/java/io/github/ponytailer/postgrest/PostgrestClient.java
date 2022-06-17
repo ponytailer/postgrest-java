@@ -1,8 +1,8 @@
 // Copyright 2022 Leyantech Ltd. All Rights Reserved.
 
-package com.ponytailer.postgrest;
+package io.github.ponytailer.postgrest;
 
-import com.ponytailer.postgrest.builder.PostgrestQueryBuilder;
+import io.github.ponytailer.postgrest.builder.PostgrestQueryBuilder;
 
 import java.util.Collections;
 import java.util.Map;

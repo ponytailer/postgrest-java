@@ -1,10 +1,10 @@
 // Copyright 2022 Leyantech Ltd. All Rights Reserved.
 
-package com.ponytailer.postgrest.builder;
+package io.github.ponytailer.postgrest.builder;
 
-import com.ponytailer.postgrest.enums.Count;
-import com.ponytailer.postgrest.enums.Method;
-import com.ponytailer.postgrest.enums.Returning;
+import io.github.ponytailer.postgrest.enums.Count;
+import io.github.ponytailer.postgrest.enums.Method;
+import io.github.ponytailer.postgrest.enums.Returning;
 
 import com.alibaba.fastjson.JSON;
 
@@ -28,15 +28,29 @@ public class PostgrestQueryBuilder extends PostgrestBuilder {
     addAllHeaders(headers);
   }
 
+  private void appendHeader(Count count, Returning returning, Boolean upsert) {
+    List<String> preferHeaders = new ArrayList<>();
+    if (Objects.nonNull(returning)) {
+      preferHeaders.add("return=" + returning.name().toLowerCase());
+    }
+    if (upsert) {
+      preferHeaders.add("resolution=merge-duplicates");
+    }
+    if (Objects.nonNull(count)) {
+      preferHeaders.add("count=" + count.name().toLowerCase());
+    }
+    if (!preferHeaders.isEmpty()) {
+      addHeaders(HEADER_PREFER, String.join(",", preferHeaders));
+    }
+  }
+
   /**
    * select table.
    */
   public PostgrestFilterBuilder select(String columns, Boolean head, Count count) {
     setMethod(head ? Method.HEAD : Method.GET);
     addParams(SELECT, columns);
-    if (Objects.nonNull(count)) {
-      addHeaders(HEADER_PREFER, "count=" + count.name().toLowerCase());
-    }
+    appendHeader(count, null, false);
     return new PostgrestFilterBuilder(this);
   }
 
@@ -58,19 +72,11 @@ public class PostgrestQueryBuilder extends PostgrestBuilder {
       String onConflict, Returning returning, Count count) {
 
     setMethod(Method.POST);
+    appendHeader(count, returning, upsert);
 
-    List<String> preferHeaders = new ArrayList<>();
-    preferHeaders.add("return=" + returning.name().toLowerCase());
-    if (upsert) {
-      preferHeaders.add("resolution=merge-duplicates");
-    }
     if (upsert && Objects.nonNull(onConflict)) {
       addParams("on_conflict", onConflict);
     }
-    if (Objects.nonNull(count)) {
-      preferHeaders.add("count=" + count.name().toLowerCase());
-    }
-    addHeaders(HEADER_PREFER, String.join(",", preferHeaders));
 
     setBody(JSON.toJSONString(values));
     return new PostgrestFilterBuilder(this);
@@ -87,6 +93,39 @@ public class PostgrestQueryBuilder extends PostgrestBuilder {
 
   public <V> PostgrestFilterBuilder insert(List<Map<String, V>> valueList) {
     return insert(valueList, false, null, Returning.REPRESENTATION, null);
+  }
+
+  /**
+   * delete.
+   */
+  public PostgrestFilterBuilder delete(Returning returning, Count count) {
+    setMethod(Method.DELETE);
+    appendHeader(count, returning, false);
+    return new PostgrestFilterBuilder(this);
+  }
+
+  public PostgrestFilterBuilder delete() {
+    return delete(Returning.REPRESENTATION, null);
+  }
+
+  /**
+   * update.
+   */
+  public <V> PostgrestFilterBuilder update(Map<String, V> value, Returning returning, Count count) {
+    setMethod(Method.PATCH);
+    setBody(JSON.toJSONString(value));
+    appendHeader(count, returning, false);
+    return new PostgrestFilterBuilder(this);
+  }
+
+  /**
+   * update.
+   */
+  public <V> PostgrestFilterBuilder update(Map<String, V> value) {
+    setMethod(Method.PATCH);
+    setBody(JSON.toJSONString(value));
+    appendHeader(null, Returning.REPRESENTATION, false);
+    return new PostgrestFilterBuilder(this);
   }
 
 }

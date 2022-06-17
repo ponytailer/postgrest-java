@@ -1,6 +1,6 @@
-package com.ponytailer.postgrest.builder;
+package io.github.ponytailer.postgrest.builder;
 
-import com.ponytailer.postgrest.enums.FilterOperator;
+import io.github.ponytailer.postgrest.enums.FilterOperator;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,7 +1,7 @@
-package com.ponytailer.postgrest.http;
+package io.github.ponytailer.postgrest.http;
 
-import com.ponytailer.postgrest.enums.Method;
-import com.ponytailer.postgrest.response.PostgrestResponse;
+import io.github.ponytailer.postgrest.enums.Method;
+import io.github.ponytailer.postgrest.response.PostgrestResponse;
 import com.leyantech.utility.Logger;
 
 import com.google.inject.Singleton;

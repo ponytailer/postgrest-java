@@ -1,6 +1,6 @@
 // Copyright 2022 Leyantech Ltd. All Rights Reserved.
 
-package com.ponytailer.postgrest.enums;
+package io.github.ponytailer.postgrest.enums;
 
 /**
  * @author hs, {@literal <hs@leyantech.com>}
@@ -10,7 +10,7 @@ public enum Method {
   GET,
   HEAD,
   POST,
-  PUT,
+  PATCH,
   DELETE
 
 }

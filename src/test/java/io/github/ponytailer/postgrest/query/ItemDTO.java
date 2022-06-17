@@ -1,6 +1,6 @@
 // Copyright 2022 Leyantech Ltd. All Rights Reserved.
 
-package com.ponytailer.postgrest.query;
+package io.github.ponytailer.postgrest.query;
 
 import java.util.List;
 

@@ -1,10 +1,10 @@
 // Copyright 2022 Leyantech Ltd. All Rights Reserved.
 
-package com.ponytailer.postgrest.builder;
+package io.github.ponytailer.postgrest.builder;
 
-import com.ponytailer.postgrest.enums.Count;
-import com.ponytailer.postgrest.enums.Method;
-import com.ponytailer.postgrest.enums.Returning;
+import io.github.ponytailer.postgrest.enums.Count;
+import io.github.ponytailer.postgrest.enums.Method;
+import io.github.ponytailer.postgrest.enums.Returning;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -84,6 +84,40 @@ public class PostgrestQueryBuilderTest {
         builder.getHeaders().get(headerKey));
     Assert.assertEquals("name", builder.getParams().get("on_conflict"));
     Assert.assertEquals(expectedBody, builder.getBody());
+  }
+
+  @Test
+  public void testDelete() {
+    PostgrestQueryBuilder builder = newBuilder();
+
+    builder.delete();
+    Assert.assertEquals(Method.DELETE, builder.getMethod());
+    Assert.assertEquals("return=representation", builder.getHeaders().get(headerKey));
+
+    builder.delete(Returning.MINIMAL, Count.ESTIMATED);
+    Assert.assertEquals(Method.DELETE, builder.getMethod());
+    Assert.assertEquals("return=minimal,count=estimated", builder.getHeaders().get(headerKey));
+
+  }
+
+  @Test
+  public void testUpdate() {
+    PostgrestQueryBuilder builder = newBuilder();
+    final String expectedBody = "{\"name\":\"title\"}";
+    Map<String, String> value = new HashMap<>();
+    value.put("name", "title");
+    builder.update(value);
+
+    Assert.assertEquals(Method.PATCH, builder.getMethod());
+    Assert.assertEquals("return=representation", builder.getHeaders().get(headerKey));
+    Assert.assertEquals(expectedBody, builder.getBody());
+
+    builder = newBuilder();
+    builder.update(value, Returning.MINIMAL, Count.EXACT);
+    Assert.assertEquals(Method.PATCH, builder.getMethod());
+    Assert.assertEquals("return=minimal,count=exact", builder.getHeaders().get(headerKey));
+    Assert.assertEquals(expectedBody, builder.getBody());
+
   }
 
 }

@@ -1,9 +1,9 @@
 // Copyright 2022 Leyantech Ltd. All Rights Reserved.
 
-package com.ponytailer.postgrest.query;
+package io.github.ponytailer.postgrest.query;
 
-import com.ponytailer.postgrest.PostgrestClient;
-import com.ponytailer.postgrest.exceptions.MethodNotFoundException;
+import io.github.ponytailer.postgrest.PostgrestClient;
+import io.github.ponytailer.postgrest.exceptions.MethodNotFoundException;
 
 import org.junit.Test;
 

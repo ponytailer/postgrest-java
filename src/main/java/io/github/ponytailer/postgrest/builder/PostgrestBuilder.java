@@ -1,9 +1,9 @@
-package com.ponytailer.postgrest.builder;
+package io.github.ponytailer.postgrest.builder;
 
-import com.ponytailer.postgrest.enums.Method;
-import com.ponytailer.postgrest.exceptions.MethodNotFoundException;
-import com.ponytailer.postgrest.http.HttpClient;
-import com.ponytailer.postgrest.response.PostgrestResponse;
+import io.github.ponytailer.postgrest.enums.Method;
+import io.github.ponytailer.postgrest.exceptions.MethodNotFoundException;
+import io.github.ponytailer.postgrest.http.HttpClient;
+import io.github.ponytailer.postgrest.response.PostgrestResponse;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

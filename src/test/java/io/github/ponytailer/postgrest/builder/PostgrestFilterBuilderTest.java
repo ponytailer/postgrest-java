@@ -1,6 +1,6 @@
 // Copyright 2022 Leyantech Ltd. All Rights Reserved.
 
-package com.ponytailer.postgrest.builder;
+package io.github.ponytailer.postgrest.builder;
 
 import org.junit.Assert;
 import org.junit.Test;

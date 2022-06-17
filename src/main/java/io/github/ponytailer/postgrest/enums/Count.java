@@ -1,4 +1,4 @@
-package com.ponytailer.postgrest.enums;
+package io.github.ponytailer.postgrest.enums;
 
 /**
  * @author hs, {@literal <hs@leyantech.com>}
