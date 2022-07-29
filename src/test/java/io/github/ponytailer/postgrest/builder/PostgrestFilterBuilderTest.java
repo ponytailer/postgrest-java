@@ -1,5 +1,3 @@
-// Copyright 2022 Leyantech Ltd. All Rights Reserved.
-
 package io.github.ponytailer.postgrest.builder;
 
 import org.junit.Assert;
@@ -80,5 +78,65 @@ public class PostgrestFilterBuilderTest {
     Assert.assertEquals("in.(test,test2)", builder.getParams().get("name"));
   }
 
+  @Test
+  public void testLimit() {
+    PostgrestFilterBuilder builder = newBuilder();
+    builder.limit(1L);
+    Assert.assertEquals("1", builder.getParams().get("limit"));
+
+    builder = newBuilder();
+    builder.limit(1L, "item");
+    Assert.assertEquals("1", builder.getParams().get("item.limit"));
+
+  }
+
+  @Test
+  public void testOrder() {
+    PostgrestFilterBuilder builder = newBuilder();
+    builder.order("name");
+    Assert.assertEquals("name.desc", builder.getParams().get("order"));
+
+  }
+
+  @Test
+  public void testRange() {
+    PostgrestFilterBuilder builder = newBuilder();
+    builder.range(1L, 20L);
+    Assert.assertEquals("1", builder.getParams().get("offset"));
+    Assert.assertEquals("20", builder.getParams().get("limit"));
+
+  }
+
+  @Test
+  public void testPagination() {
+    PostgrestFilterBuilder builder = newBuilder();
+    builder.pagination(1L, 20L);
+    Assert.assertEquals("0", builder.getParams().get("offset"));
+    Assert.assertEquals("20", builder.getParams().get("limit"));
+
+  }
+
+  @Test
+  public void testCs() {
+    PostgrestFilterBuilder builder = newBuilder();
+    builder.cs("genders", Arrays.asList("男", "女"));
+    Assert.assertEquals("cs.{男,女}", builder.getParams().get("genders"));
+
+  }
+
+  @Test
+  public void testCd() {
+    PostgrestFilterBuilder builder = newBuilder();
+    builder.cd("genders", Arrays.asList("男", "女"));
+    Assert.assertEquals("cd.{男,女}", builder.getParams().get("genders"));
+
+  }
+
+  @Test
+  public void testOv() {
+    PostgrestFilterBuilder builder = newBuilder();
+    builder.ov("genders", Arrays.asList("男", "女"));
+    Assert.assertEquals("ov.{男,女}", builder.getParams().get("genders"));
+  }
 
 }

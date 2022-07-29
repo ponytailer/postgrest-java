@@ -1,8 +1,21 @@
-### README
+## postgrest-java 
 
 #### INIT
 ```java
 PostgrestClient client = new PostgrestClient("http://localhost");
+```
+
+
+#### RPC
+
+```java
+Map<String, String> body = new HashMap<>();
+
+body.put("name", "123");
+body.put("age", "13");
+    
+client.rpc("method", body).execute();
+
 ```
 
 #### SELECT

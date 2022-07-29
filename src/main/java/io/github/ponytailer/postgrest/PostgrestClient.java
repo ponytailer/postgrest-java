@@ -26,4 +26,12 @@ public class PostgrestClient {
     return new PostgrestQueryBuilder(tableURI, headers);
   }
 
+  /**
+   * rpc.
+   */
+  public <V> PostgrestQueryBuilder rpc(String method, Map<String, V> params) {
+    String tableURI = uri + "/rpc/" + method;
+    return new PostgrestQueryBuilder(tableURI, headers).rpc(params);
+  }
+
 }

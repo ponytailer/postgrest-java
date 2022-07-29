@@ -2,11 +2,10 @@
 
 package io.github.ponytailer.postgrest.builder;
 
+import com.alibaba.fastjson.JSON;
 import io.github.ponytailer.postgrest.enums.Count;
 import io.github.ponytailer.postgrest.enums.Method;
 import io.github.ponytailer.postgrest.enums.Returning;
-
-import com.alibaba.fastjson.JSON;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -126,6 +125,15 @@ public class PostgrestQueryBuilder extends PostgrestBuilder {
     setBody(JSON.toJSONString(value));
     appendHeader(null, Returning.REPRESENTATION, false);
     return new PostgrestFilterBuilder(this);
+  }
+
+  /**
+   * rpc.
+   */
+  public <V> PostgrestQueryBuilder rpc(Map<String, V> params) {
+    setMethod(Method.POST);
+    setBody(JSON.toJSONString(params));
+    return this;
   }
 
 }

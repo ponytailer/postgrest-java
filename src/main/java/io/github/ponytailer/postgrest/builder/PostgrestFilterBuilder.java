@@ -1,8 +1,10 @@
 package io.github.ponytailer.postgrest.builder;
 
+import com.google.common.base.Strings;
 import io.github.ponytailer.postgrest.enums.FilterOperator;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -111,6 +113,100 @@ public class PostgrestFilterBuilder extends PostgrestBuilder {
    */
   public <V> PostgrestFilterBuilder in(String column, List<V> valueList) {
     addParams(column, "in.(" + cleanFilterArray(valueList) + ")");
+    return this;
+  }
+
+  /**
+   * limit.
+   */
+  public PostgrestFilterBuilder limit(Long size) {
+    addParams("limit", size.toString());
+    return this;
+  }
+
+  /**
+   * limit / foreignTable.
+   */
+  public PostgrestFilterBuilder limit(Long size, String foreignTable) {
+    String key = Objects.isNull(foreignTable) ? "limit" : foreignTable + ".limit";
+    addParams(key, size.toString());
+    return this;
+  }
+
+  /**
+   * order, 默认是nullfirst.
+   */
+  public PostgrestFilterBuilder order(String column, Boolean ascending, String foreignTable) {
+    String key = Strings.isNullOrEmpty(foreignTable) ? "order" : foreignTable + ".order";
+
+    addParams(key, column + (ascending ? ".asc" : ".desc"));
+    return this;
+  }
+
+  /**
+   * order_by.
+   */
+  public PostgrestFilterBuilder order(String column, Boolean ascending) {
+    addParams("order", column + (ascending ? ".asc" : ".desc"));
+    return this;
+  }
+
+  /**
+   * order desc.
+   */
+  public PostgrestFilterBuilder order(String column) {
+    addParams("order", column + ".desc");
+    return this;
+  }
+
+  /**
+   * range.
+   */
+  public PostgrestFilterBuilder range(Long from, Long to) {
+    addParams("offset", from.toString());
+    addParams("limit", String.valueOf(to - from + 1));
+    return this;
+  }
+
+  /**
+   * pagination.
+   */
+  public PostgrestFilterBuilder pagination(Long page, Long size) {
+    addParams("offset", String.valueOf((page - 1) * size));
+    addParams("limit", size.toString());
+    return this;
+  }
+
+  /**
+   * 等同于 @>.
+   */
+  public <V> PostgrestFilterBuilder cs(String column, List<V> values) {
+    if (values.isEmpty()) {
+      return this;
+    }
+    addParams(column, "cs.{" + cleanFilterArray(values) + "}");
+    return this;
+  }
+
+  /**
+   * 等同于 @<.
+   */
+  public <V> PostgrestFilterBuilder cd(String column, List<V> values) {
+    if (values.isEmpty()) {
+      return this;
+    }
+    addParams(column, "cd.{" + cleanFilterArray(values) + "}");
+    return this;
+  }
+
+  /**
+   * overlap, 等同于 &&.
+   */
+  public <V> PostgrestFilterBuilder ov(String column, List<V> values) {
+    if (values.isEmpty()) {
+      return this;
+    }
+    addParams(column, "ov.{" + cleanFilterArray(values) + "}");
     return this;
   }
 
